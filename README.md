@@ -2,6 +2,11 @@
 
 A React Native mobile app built with Expo that allows users to identify animals and insects by taking photos or selecting images from their gallery.
 
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=flat-square&logo=github)](https://github.com/yourusername/animal-identifier)
+[![Expo](https://img.shields.io/badge/Expo-SDK%2054-000020?style=flat-square&logo=expo)](https://expo.dev/)
+[![React Native](https://img.shields.io/badge/React%20Native-0.72-blue?style=flat-square&logo=react)](https://reactnative.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+
 ## Features
 
 - 📷 **Camera Integration**: Take photos directly within the app
@@ -36,12 +41,13 @@ A React Native mobile app built with Expo that allows users to identify animals 
 - Expo CLI (`npm install -g @expo/cli`)
 - iOS Simulator or physical iOS device
 - Expo Go app (for testing on physical device)
+- Git (for version control)
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/yourusername/animal-identifier.git
    cd animal-identifier
    ```
 
@@ -58,6 +64,35 @@ A React Native mobile app built with Expo that allows users to identify animals 
 4. Run on iOS:
    - Press `i` in the terminal to open iOS Simulator
    - Or scan the QR code with Expo Go app on your iOS device
+
+### Git Setup
+
+If you're setting up the project for the first time:
+
+1. **Initialize Git repository:**
+   ```bash
+   git init
+   ```
+
+2. **Configure Git (if not already done):**
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your.email@example.com"
+   ```
+
+3. **Add and commit files:**
+   ```bash
+   git add .
+   git commit -m "Initial commit: Animal & Insect Identifier App"
+   ```
+
+4. **Connect to GitHub:**
+   ```bash
+   # Create repository on GitHub first, then:
+   git remote add origin https://github.com/yourusername/animal-identifier.git
+   git branch -M main
+   git push -u origin main
+   ```
 
 ## Project Structure
 
@@ -121,13 +156,108 @@ The app requires the following permissions:
 - [ ] Augmented reality features
 - [ ] Educational content and quizzes
 
+## Development Workflow
+
+### Making Changes
+
+1. **Create a new branch:**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **Make your changes** and test them thoroughly
+
+3. **Commit your changes:**
+   ```bash
+   git add .
+   git commit -m "Add: Description of your changes"
+   ```
+
+4. **Push to your branch:**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+5. **Create a Pull Request** on GitHub
+
+### Git Commands Reference
+
+```bash
+# Check status
+git status
+
+# View commit history
+git log --oneline
+
+# Switch branches
+git checkout main
+git checkout feature/your-branch
+
+# Merge changes
+git merge feature/your-branch
+
+# Pull latest changes
+git pull origin main
+
+# Reset to last commit (be careful!)
+git reset --hard HEAD
+```
+
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+4. Test thoroughly on iOS device/simulator
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Submit a pull request
+
+### Commit Message Convention
+
+Use clear, descriptive commit messages:
+- `Add:` for new features
+- `Fix:` for bug fixes
+- `Update:` for improvements
+- `Remove:` for deletions
+- `Refactor:` for code restructuring
+
+## Deployment
+
+### Building for Production
+
+1. **Build for iOS:**
+   ```bash
+   npx expo build:ios
+   ```
+
+2. **Build for Android:**
+   ```bash
+   npx expo build:android
+   ```
+
+3. **Create development build:**
+   ```bash
+   npx expo run:ios
+   npx expo run:android
+   ```
+
+### App Store Submission
+
+1. **Configure app.json** with proper bundle identifiers
+2. **Build production version** using EAS Build
+3. **Submit to App Store Connect** or Google Play Console
+
+## Version History
+
+### v1.0.0 (Current)
+- ✅ Initial release
+- ✅ Camera integration
+- ✅ Photo gallery access
+- ✅ Animal identification (mock service)
+- ✅ Results display
+- ✅ iOS optimization
+- ✅ TypeScript support
 
 ## License
 
@@ -136,3 +266,7 @@ This project is licensed under the MIT License.
 ## Support
 
 For support or questions, please open an issue in the repository.
+
+---
+
+**Made with ❤️ using React Native and Expo**
