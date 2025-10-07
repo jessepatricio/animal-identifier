@@ -11,7 +11,8 @@ A React Native mobile app built with Expo that allows users to identify animals 
 
 - 📷 **Camera Integration**: Take photos directly within the app
 - 📁 **Gallery Selection**: Choose existing photos from your device
-- 🔍 **AI Identification**: Identify animals and insects (currently using mock data)
+- 🤖 **Google Gemini AI**: Real-time animal and insect identification using Google's advanced AI
+- 🖼️ **Smart Image Processing**: Automatic image resizing and compression to ensure optimal API performance
 - 📊 **Detailed Information**: View comprehensive species information including:
   - Scientific name
   - Description
@@ -19,18 +20,23 @@ A React Native mobile app built with Expo that allows users to identify animals 
   - Diet
   - Size
   - Lifespan
-- 🎯 **Confidence Scoring**: See how confident the identification is
-- 🔄 **Alternative Matches**: View similar species suggestions
-- 📱 **iOS Optimized**: Built specifically for iOS devices
+  - Category classification
+- 🎯 **Confidence Scoring**: See how confident the AI identification is
+- 🔄 **Alternative Matches**: View similar species suggestions from AI analysis
+- 📱 **Cross-Platform**: Optimized for both iOS and Android devices
+- 🎨 **Modern UI**: Beautiful, intuitive interface with gradient designs
 
 ## Tech Stack
 
 - **React Native** with **Expo SDK 54**
 - **TypeScript** for type safety
+- **Google Gemini AI** for animal identification
 - **React Navigation** for screen navigation
 - **Expo Camera** for camera functionality
 - **Expo Image Picker** for gallery access
 - **Expo Linear Gradient** for beautiful UI gradients
+- **@bam.tech/react-native-image-resizer** for image optimization
+- **Expo File System** for file operations
 
 ## Getting Started
 
@@ -39,8 +45,9 @@ A React Native mobile app built with Expo that allows users to identify animals 
 - Node.js (v16 or higher)
 - npm or yarn
 - Expo CLI (`npm install -g @expo/cli`)
-- iOS Simulator or physical iOS device
+- iOS Simulator or physical iOS/Android device
 - Expo Go app (for testing on physical device)
+- Google Gemini API key (see [Setup Guide](#google-gemini-setup))
 - Git (for version control)
 
 ### Installation
@@ -61,9 +68,26 @@ A React Native mobile app built with Expo that allows users to identify animals 
    npx expo start
    ```
 
-4. Run on iOS:
+4. Run on device:
    - Press `i` in the terminal to open iOS Simulator
-   - Or scan the QR code with Expo Go app on your iOS device
+   - Press `a` in the terminal to open Android Emulator
+   - Or scan the QR code with Expo Go app on your device
+
+### Google Gemini Setup
+
+1. **Get your API key:**
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Create a new API key
+   - Copy the API key
+
+2. **Configure the app:**
+   - Open `src/config/gemini.ts`
+   - Replace `'YOUR_GEMINI_API_KEY_HERE'` with your actual API key
+   - Save the file
+
+3. **Test the connection:**
+   - The app will automatically test the API connection on startup
+   - Check the console logs for connection status
 
 ### Git Setup
 
@@ -99,14 +123,19 @@ If you're setting up the project for the first time:
 ```
 src/
 ├── components/          # Reusable UI components
+├── config/             # Configuration files
+│   └── gemini.ts         # Google Gemini API configuration
 ├── screens/            # App screens
 │   ├── HomeScreen.tsx     # Main landing screen
 │   ├── CameraScreen.tsx   # Camera and photo capture
-│   └── ResultsScreen.tsx  # Identification results
+│   └── ResultsScreen.tsx  # AI identification results
 ├── services/           # Business logic and API calls
-│   └── identificationService.ts  # Mock identification service
-└── types/              # TypeScript type definitions
-    └── index.ts
+│   ├── identificationService.ts  # Main identification service with fallback
+│   └── customGeminiService.ts    # Google Gemini API service
+├── types/              # TypeScript type definitions
+│   └── index.ts
+└── utils/              # Utility functions
+    └── imageUtils.ts      # Image processing and resizing
 ```
 
 ## How It Works
@@ -116,23 +145,40 @@ src/
    - Take photos with the device camera
    - Access photo gallery
    - Preview captured images
-3. **Results Screen**: 
-   - Display identification results
-   - Show detailed animal/insect information
-   - Present alternative matches
+3. **Image Processing**: 
+   - Automatic image resizing and compression
+   - Format optimization for API compatibility
+   - Size validation (ensures images are under 20MB)
+4. **AI Analysis**: 
+   - Send processed image to Google Gemini AI
+   - Receive detailed animal/insect identification
+   - Get confidence scores and alternative matches
+5. **Results Screen**: 
+   - Display AI-generated identification results
+   - Show comprehensive species information
+   - Present alternative matches with confidence scores
+   - Modern, card-based UI with quick facts grid
 
-## Current Implementation
+## AI Integration
 
-The app currently uses a mock identification service that randomly selects from a predefined database of animals and insects. In a production environment, you would integrate with:
+The app now uses **Google Gemini AI** for real-time animal and insect identification. The AI provides:
 
-- **Google Vision API**
-- **AWS Rekognition**
-- **Azure Computer Vision**
-- **Custom ML models** (TensorFlow Lite, Core ML)
+- **Accurate Species Identification**: Advanced computer vision for precise animal recognition
+- **Detailed Information**: Comprehensive species data including scientific names, habitats, and behaviors
+- **Confidence Scoring**: AI confidence levels for identification accuracy
+- **Alternative Matches**: Similar species suggestions when identification is uncertain
+- **Fallback System**: Mock data service as backup when API is unavailable
 
-## Database
+### Image Processing Features
 
-The app includes a sample database with information about:
+- **Smart Resizing**: Automatic image compression to meet API requirements (under 20MB)
+- **Format Optimization**: Converts images to optimal formats for AI processing
+- **Quality Preservation**: Maintains image quality while reducing file size
+- **Error Handling**: Robust fallback mechanisms for processing failures
+
+## Fallback Database
+
+The app includes a fallback database with sample information about:
 - Golden Retriever
 - Labrador Retriever
 - Monarch Butterfly
@@ -140,21 +186,43 @@ The app includes a sample database with information about:
 - American Robin
 - Honeybee
 
+*Note: This database is only used when the Google Gemini API is unavailable or fails.*
+
 ## Permissions
 
 The app requires the following permissions:
 - **Camera**: To take photos
 - **Photo Library**: To access existing images
 
+## Recent Updates
+
+### v1.1.0 - AI Integration & Image Processing
+- ✅ **Google Gemini AI Integration**: Real-time animal identification using advanced AI
+- ✅ **Smart Image Resizing**: Automatic compression to ensure API compatibility
+- ✅ **Enhanced Results Display**: Modern UI with quick facts grid and AI-generated badges
+- ✅ **Error Handling**: Robust fallback systems and improved error recovery
+- ✅ **TypeScript Fixes**: Resolved deprecated API warnings and type safety issues
+- ✅ **Cross-Platform Support**: Optimized for both iOS and Android
+
+### v1.0.0 - Initial Release
+- ✅ Camera integration
+- ✅ Photo gallery access
+- ✅ Mock identification service
+- ✅ Basic results display
+- ✅ iOS optimization
+- ✅ TypeScript support
+
 ## Future Enhancements
 
-- [ ] Real AI integration for accurate identification
 - [ ] Offline mode with local ML models
 - [ ] User favorites and history
 - [ ] Social sharing features
 - [ ] Location-based species information
 - [ ] Augmented reality features
 - [ ] Educational content and quizzes
+- [ ] Batch image processing
+- [ ] Species comparison tools
+- [ ] Conservation information
 
 ## Development Workflow
 
@@ -248,16 +316,93 @@ Use clear, descriptive commit messages:
 2. **Build production version** using EAS Build
 3. **Submit to App Store Connect** or Google Play Console
 
-## Version History
+## Troubleshooting
 
-### v1.0.0 (Current)
-- ✅ Initial release
-- ✅ Camera integration
-- ✅ Photo gallery access
-- ✅ Animal identification (mock service)
-- ✅ Results display
-- ✅ iOS optimization
-- ✅ TypeScript support
+### Common Issues
+
+1. **API Key Not Working**
+   - Ensure your Google Gemini API key is correctly set in `src/config/gemini.ts`
+   - Check that the API key has proper permissions
+   - Verify your internet connection
+
+2. **Image Processing Errors**
+   - The app automatically resizes large images
+   - If resizing fails, try with a smaller image
+   - Check console logs for detailed error information
+
+3. **Deprecated API Warnings**
+   - These warnings are handled automatically
+   - The app uses the legacy API for compatibility
+   - No action required from users
+
+4. **App Crashes on Image Selection**
+   - Ensure proper permissions are granted
+   - Try restarting the app
+   - Check device storage space
+
+### Debug Mode
+
+Enable debug logging by checking the console output when running:
+```bash
+npx expo start
+```
+
+Look for logs starting with:
+- `LOG` - Normal operation
+- `WARN` - Non-critical issues
+- `ERROR` - Problems that need attention
+
+## Technical Implementation
+
+### Image Processing Pipeline
+
+1. **Image Capture/Selection**: User takes photo or selects from gallery
+2. **Size Validation**: Check if image is under 20MB limit
+3. **Smart Resizing**: If needed, progressively reduce quality and dimensions
+4. **Format Optimization**: Convert to optimal format for AI processing
+5. **Base64 Encoding**: Prepare image for API transmission
+6. **AI Analysis**: Send to Google Gemini for identification
+7. **Result Processing**: Parse and format AI response
+8. **UI Display**: Show results with modern card-based layout
+
+### Error Handling Strategy
+
+- **Graceful Degradation**: Falls back to mock data if AI fails
+- **Progressive Resizing**: Multiple attempts with different quality settings
+- **Non-blocking Validation**: Continues processing even if size checks fail
+- **Comprehensive Logging**: Detailed logs for debugging and monitoring
+
+### Performance Optimizations
+
+- **Lazy Loading**: Images are processed only when needed
+- **Memory Management**: Automatic cleanup of temporary files
+- **Efficient Compression**: Smart algorithms to maintain quality while reducing size
+- **Caching**: Reuses processed images when possible
+
+### Service Architecture
+
+The app uses a clean, layered service architecture:
+
+1. **`identificationService.ts`** - Main service layer that:
+   - Orchestrates the identification process
+   - Handles fallback to mock data when AI fails
+   - Provides a consistent interface for the UI
+
+2. **`customGeminiService.ts`** - Google Gemini AI integration that:
+   - Handles image processing and resizing
+   - Manages API communication with Google Gemini
+   - Processes and formats AI responses
+
+3. **`imageUtils.ts`** - Utility functions for:
+   - Image resizing and compression
+   - Format conversion and validation
+   - File system operations
+
+This architecture ensures:
+- **Separation of Concerns**: Each service has a specific responsibility
+- **Error Resilience**: Graceful fallbacks when services fail
+- **Maintainability**: Easy to modify or replace individual components
+- **Testability**: Each service can be tested independently
 
 ## License
 

@@ -2,6 +2,7 @@
 export const GEMINI_CONFIG = {
   // Replace with your actual API key from Google AI Studio
   API_KEY: 'you_google_api_key_here',
+
   
   // Model configuration
   MODEL_NAME: 'gemini-2.5-flash',
