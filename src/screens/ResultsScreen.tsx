@@ -55,6 +55,9 @@ export default function ResultsScreen({ navigation, route }: Props) {
               {Math.round(confidence * 100)}% Match
             </Text>
           </View>
+          <View style={styles.aiBadge}>
+            <Text style={styles.aiBadgeText}>🤖 AI Generated</Text>
+          </View>
         </View>
 
         <View style={styles.mainResult}>
@@ -73,29 +76,44 @@ export default function ResultsScreen({ navigation, route }: Props) {
             </View>
           </LinearGradient>
 
+          {/* Quick Summary Card */}
+          <View style={styles.summaryCard}>
+            <Text style={styles.summaryTitle}>Quick Facts</Text>
+            <View style={styles.factsGrid}>
+              <View style={styles.factItem}>
+                <Text style={styles.factLabel}>Habitat</Text>
+                <Text style={styles.factValue}>{animal.habitat}</Text>
+              </View>
+              <View style={styles.factItem}>
+                <Text style={styles.factLabel}>Diet</Text>
+                <Text style={styles.factValue}>{animal.diet}</Text>
+              </View>
+              <View style={styles.factItem}>
+                <Text style={styles.factLabel}>Size</Text>
+                <Text style={styles.factValue}>{animal.size}</Text>
+              </View>
+              <View style={styles.factItem}>
+                <Text style={styles.factLabel}>Lifespan</Text>
+                <Text style={styles.factValue}>{animal.lifespan}</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Description Card */}
           <View style={styles.detailsCard}>
-            <Text style={styles.sectionTitle}>Description</Text>
+            <Text style={styles.sectionTitle}>About {animal.name}</Text>
             <Text style={styles.description}>{animal.description}</Text>
-
-            <Text style={styles.sectionTitle}>Habitat</Text>
-            <Text style={styles.detailText}>{animal.habitat}</Text>
-
-            <Text style={styles.sectionTitle}>Diet</Text>
-            <Text style={styles.detailText}>{animal.diet}</Text>
-
-            <Text style={styles.sectionTitle}>Size</Text>
-            <Text style={styles.detailText}>{animal.size}</Text>
-
-            <Text style={styles.sectionTitle}>Lifespan</Text>
-            <Text style={styles.detailText}>{animal.lifespan}</Text>
           </View>
 
           {alternativeMatches && alternativeMatches.length > 0 && (
             <View style={styles.alternativesCard}>
-              <Text style={styles.sectionTitle}>Alternative Matches</Text>
+              <Text style={styles.sectionTitle}>Other Possible Matches</Text>
+              <Text style={styles.alternativesSubtitle}>
+                Based on AI analysis, these are other possible identifications:
+              </Text>
               {alternativeMatches.map((alt, index) => (
-                <TouchableOpacity key={alt.id} style={styles.alternativeItem}>
-                  <Text style={styles.categoryEmoji}>
+                <View key={alt.id} style={styles.alternativeItem}>
+                  <Text style={styles.alternativeEmoji}>
                     {getCategoryEmoji(alt.category)}
                   </Text>
                   <View style={styles.alternativeInfo}>
@@ -104,7 +122,7 @@ export default function ResultsScreen({ navigation, route }: Props) {
                       {alt.scientificName}
                     </Text>
                   </View>
-                </TouchableOpacity>
+                </View>
               ))}
             </View>
           )}
@@ -162,6 +180,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
+  aiBadge: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    backgroundColor: 'rgba(76, 175, 80, 0.9)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 15,
+  },
+  aiBadgeText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
   mainResult: {
     padding: 20,
   },
@@ -191,6 +223,54 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#e8f5e8',
     fontStyle: 'italic',
+  },
+  summaryCard: {
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  summaryTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  factsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  factItem: {
+    width: '48%',
+    backgroundColor: '#f8f9fa',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: '#4CAF50',
+  },
+  factLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#666',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 4,
+  },
+  factValue: {
+    fontSize: 14,
+    color: '#333',
+    lineHeight: 18,
   },
   detailsCard: {
     backgroundColor: '#fff',
@@ -237,16 +317,27 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  alternativesSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 15,
+    fontStyle: 'italic',
+  },
   alternativeItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 10,
+    marginBottom: 8,
+  },
+  alternativeEmoji: {
+    fontSize: 24,
+    marginRight: 12,
   },
   alternativeInfo: {
     flex: 1,
-    marginLeft: 15,
   },
   alternativeName: {
     fontSize: 16,

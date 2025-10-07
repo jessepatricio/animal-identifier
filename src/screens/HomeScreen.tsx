@@ -85,7 +85,7 @@ export default function HomeScreen({ navigation }: Props) {
 
           <View style={styles.features}>
             <Text style={styles.featuresTitle}>Features:</Text>
-            <Text style={styles.feature}>• Identify animals and insects</Text>
+            <Text style={styles.feature}>• Identify animals and insects with AI</Text>
             <Text style={styles.feature}>• Learn about species information</Text>
             <Text style={styles.feature}>• Discover habitats and behaviors</Text>
           </View>

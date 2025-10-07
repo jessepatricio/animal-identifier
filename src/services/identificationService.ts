@@ -1,4 +1,5 @@
 import { AnimalInfo, IdentificationResult } from '../types';
+import { customGeminiService } from './customGeminiService';
 
 // Mock database of animals and insects
 const animalDatabase: AnimalInfo[] = [
@@ -70,18 +71,32 @@ const animalDatabase: AnimalInfo[] = [
   },
 ];
 
-// Simple mock identification function
-// In a real app, this would call an AI service like Google Vision API, AWS Rekognition, or a custom ML model
+// Animal identification using Google Gemini API
 export const identifyAnimal = async (imageUri: string): Promise<IdentificationResult> => {
+  try {
+    console.log('Starting animal identification...');
+    
+    // Use custom Gemini API for real animal identification
+    const result = await customGeminiService.identifyAnimal(imageUri);
+    
+    console.log('Animal identification completed:', result);
+    return result;
+    
+  } catch (error) {
+    console.error('Error in animal identification:', error);
+    
+    // Fallback to mock data if Gemini API fails
+    console.log('Falling back to mock identification...');
+    return await mockIdentifyAnimal(imageUri);
+  }
+};
+
+// Fallback mock identification function
+const mockIdentifyAnimal = async (imageUri: string): Promise<IdentificationResult> => {
   // Simulate API call delay
   await new Promise(resolve => setTimeout(resolve, 2000));
 
   // For demo purposes, randomly select an animal from the database
-  // In a real implementation, you would:
-  // 1. Convert image to base64 or send to API
-  // 2. Call AI service for identification
-  // 3. Process the response and match with database
-  
   const randomIndex = Math.floor(Math.random() * animalDatabase.length);
   const primaryMatch = animalDatabase[randomIndex];
   

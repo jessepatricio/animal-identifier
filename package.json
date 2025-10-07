@@ -9,10 +9,13 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@bam.tech/react-native-image-resizer": "^3.0.11",
+    "@google/generative-ai": "^0.24.1",
     "@react-navigation/native": "^7.1.18",
     "@react-navigation/stack": "^7.4.9",
     "expo": "~54.0.12",
     "expo-camera": "~17.0.8",
+    "expo-file-system": "^19.0.16",
     "expo-image-picker": "~17.0.8",
     "expo-linear-gradient": "~15.0.7",
     "expo-status-bar": "~3.0.8",
